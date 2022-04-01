@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1037253493123",
+    "firebase_url": "https://tt111-14cf9-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tt111-14cf9",
+    "storage_bucket": "tt111-14cf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037253493123:android:5bba41d6445b71bcdab6b6",
+        "android_client_info": {
+          "package_name": "com.example.karbantartasirendszer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037253493123-po20q7i7km4aaqb8940a2dkbdmb6akkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbwUUZwm1KgC8eU283LSbaHuNbUma-dl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037253493123-po20q7i7km4aaqb8940a2dkbdmb6akkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037253493123:android:d355b3973dd4a167dab6b6",
+        "android_client_info": {
+          "package_name": "com.example.rf_teszt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037253493123-po20q7i7km4aaqb8940a2dkbdmb6akkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbwUUZwm1KgC8eU283LSbaHuNbUma-dl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037253493123-po20q7i7km4aaqb8940a2dkbdmb6akkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
