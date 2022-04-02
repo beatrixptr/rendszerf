@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EszkozfelelosMainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eszköz hozzáadása"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/Place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Helyszín"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Név"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Azon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Azonosító"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditAzon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Kateg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kategória"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditKateg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Com"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leírás"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditCom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/KarIdo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Karbantartási időintervallum"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditKarIdo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/NormIdo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Norm Idő"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditNormIdo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Instrukcio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instrukciók"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/EditInstr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Küldés" />
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vissza" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

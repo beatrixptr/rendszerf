@@ -2,20 +2,23 @@ package com.example.karbantartasirendszer;
 
 public class Eszkoz {
 
-    private String ID;
-    private String kategoria;
-    private String kepesites;
-    private String karbantartasiIdointervallum;
-    private String normaIdo;
-    private String instrukciok;
+    private String Azonosito;
+    private String Elhelyezkedes;
+    private String Kategoria;
+    private String Leiras;
+    private String Karbantartasiido;
+    private String Normido;
+    private String Instrukcio;
 
-    public Eszkoz(String ID, String kategoria, String kepesites, String karbantartasiIdointervallum, String normaIdo, String instrukciok) {
-        this.ID = ID;
-        this.kategoria = kategoria;
-        this.kepesites = kepesites;
-        this.karbantartasiIdointervallum = karbantartasiIdointervallum;
-        this.normaIdo = normaIdo;
-        this.instrukciok = instrukciok;
+    public Eszkoz(String Azonosito, String Elhelyezkedes, String Kategoria ,String Leiras, String Karbantartasiido,String Normido,String Instrukcio) {
+
+        this.Azonosito = Azonosito;
+        this.Elhelyezkedes = Elhelyezkedes;
+        this.Kategoria = Kategoria;
+        this.Leiras = Leiras;
+        this.Karbantartasiido = Karbantartasiido;
+        this.Normido = Normido;
+        this.Instrukcio= Instrukcio;
     }
 
 

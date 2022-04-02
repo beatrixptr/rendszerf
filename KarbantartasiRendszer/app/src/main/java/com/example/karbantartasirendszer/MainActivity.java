@@ -182,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(i);
                                     break;
                                 case "eszközfelelős":
-                                    testTV.setText("Eszközfelelős");
+                                    Intent b = new Intent(MainActivity.this, EszkozfelelosMainActivity.class);
+                                    startActivity(b);
                                     break;
                                 case "operator":
                                     testTV.setText("Operátor");

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KarbantartasiRendszer">
         <activity
+            android:name=".EszkozfelelosMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminMainActivity"
             android:exported="false" />
         <activity
