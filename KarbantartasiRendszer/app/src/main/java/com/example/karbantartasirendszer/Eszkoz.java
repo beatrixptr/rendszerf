@@ -2,23 +2,35 @@ package com.example.karbantartasirendszer;
 
 public class Eszkoz {
 
-    private String Azonosito;
-    private String Elhelyezkedes;
-    private String Kategoria;
-    private String Leiras;
-    private String Karbantartasiido;
-    private String Normido;
-    private String Instrukcio;
+    public String nev;
+    public String azonosito;
+    public String elhelyezkedes;
+    public String tipus;
+    public String leiras;
+    public String karbantartasiido;
+    public String normido;
+    public String instrukcio;
 
-    public Eszkoz(String Azonosito, String Elhelyezkedes, String Kategoria ,String Leiras, String Karbantartasiido,String Normido,String Instrukcio) {
+    public Eszkoz(String Azonosito, String Elhelyezkedes, String Tipus ,String Leiras, String Karbantartasiido,String Normido,String Instrukcio) {
 
-        this.Azonosito = Azonosito;
-        this.Elhelyezkedes = Elhelyezkedes;
-        this.Kategoria = Kategoria;
-        this.Leiras = Leiras;
-        this.Karbantartasiido = Karbantartasiido;
-        this.Normido = Normido;
-        this.Instrukcio= Instrukcio;
+        this.azonosito = Azonosito;
+        this.elhelyezkedes = Elhelyezkedes;
+        this.tipus = Tipus;
+        this.leiras = Leiras;
+        this.karbantartasiido = Karbantartasiido;
+        this.normido = Normido;
+        this.instrukcio= Instrukcio;
+    }
+
+    public Eszkoz(String Nev, String Tipus ) {
+        this.nev = Nev;
+        this.azonosito = "";
+        this.elhelyezkedes = "";
+        this.tipus = Tipus;
+        this.leiras = "";
+        this.karbantartasiido = "";
+        this.normido = "";
+        this.instrukcio= "";
     }
 
 

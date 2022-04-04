@@ -1,16 +1,13 @@
 package com.example.karbantartasirendszer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.example.karbantartasirendszer.Eszkoz;
-import androidx.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,29 +15,127 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EszkozfelelosMainActivity extends AppCompatActivity {
 
-    private EditText EditPlace, EditName, EditAzon, EditKateg, EditCom, EditKarIdo, EditNormIdo, EditInstr;
-    private Button kuldes;
-    private Button vissza;
+    private ArrayList<Kategoria> kategoriak;
+    private EditText EditNameKat, EditNameEszkoz, EditKatEszkoz, EditTipusEszkoz, EditAzonEszkoz, EditVegzettsegKat;
+    private Button kuldes, kuldesEszkoz;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_eszkozfelelos_main);
+        kategoriak = new ArrayList<Kategoria>();
+        loadKategoriak();
+      //  EditPlace = findViewById(R.id.EditName);
+        EditNameKat = findViewById(R.id.editNameKat);
+        EditVegzettsegKat = findViewById(R.id.editVegzettsegKat);
+
+        EditNameEszkoz = findViewById(R.id.editNameEszkoz);
+        EditKatEszkoz = findViewById(R.id.editKategoriaEszkoz);
+        EditTipusEszkoz = findViewById(R.id.editTipusEszkoz);
+        EditAzonEszkoz = findViewById(R.id.editAzonositoEszkoz);
+
+        kuldes = findViewById(R.id.submitKat);
+        kuldes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddKategoria();
+            }
+        });
+
+        kuldesEszkoz = findViewById(R.id.submitEszkoz);
+        kuldesEszkoz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddEszkozToKategoria();
+            }
+        });
+    }
+
+    public void AddKategoria()
+    {
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference Kategoriak = rootRef.collection("Kategoriak");
+        Kategoria ujKategoria = new Kategoria(EditNameKat.getText().toString());
+        kategoriak.add(ujKategoria);
+        Log.d("teszt", "hozzaadva" + ujKategoria.nev.toString());
+        Map<String, Object> note = new HashMap<>();
+       // note.put("Nev", "cs");
+        Log.d("teszt", EditNameKat.getText().toString());
+        Kategoriak.document(ujKategoria.nev).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getApplicationContext(),"Új kategória hozzáadva", Toast.LENGTH_LONG).show();
+                Map<String, Object> note = new HashMap<>();
+                note.put("Vegzettseg", EditVegzettsegKat.getText().toString());
+                Kategoriak.document(ujKategoria.nev).update(note);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                 Toast.makeText(getApplicationContext(),"Valami hiba történt",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void AddEszkozToKategoria()
+    {
+        int katId = getKategoriaIDByNev(EditKatEszkoz.getText().toString());
+        if( katId != -1)
+        {
+            Eszkoz uj = new Eszkoz(EditNameEszkoz.getText().toString(), EditTipusEszkoz.getText().toString());
+           // String res =
+          //  Log.d("teszt2", res);
+            Log.d("teszt2", "lefut a katt");
+            kategoriak.get(katId).AddEszkoz(uj);
+        }
+        Log.d("teszt2", "lefut a katt, de kivul");
+    }
+
+    private int getKategoriaIDByNev(String kat)
+    {
+        for(int i=0; i<kategoriak.size(); i++)
+        {
+            Log.d("teszt2", "osszehasonlitani:" + kat.toString() + " - " + kategoriak.get(i).nev.toString());
+            if(kat.equals(kategoriak.get(i).nev.toString()))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void loadKategoriak()
+    {
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference Kategoriak = rootRef.collection("Kategoriak");
+        Kategoriak.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        kategoriak.add(new Kategoria(document.getId().toString()));
+                    }
+
+                    for(int i=0; i<kategoriak.size(); i++)
+                    {
+                        Log.d("teszt", kategoriak.get(i).nev.toString());
+                    }
+                }
+            }
+        });
+    }
+
+  /*  private Button vissza;
     private static List<String> list;
     private static List<String> names;
 
@@ -105,19 +200,6 @@ public class EszkozfelelosMainActivity extends AppCompatActivity {
                     }
                 });;
 
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
+   */
 }
