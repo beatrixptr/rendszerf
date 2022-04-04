@@ -56,11 +56,13 @@
 
     </LinearLayout>
 
+    <!--
     <Button
         android:id="@+id/bejelentkezesBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Bejelentkezés" />
+        -->
 
     <TextView
         android:id="@+id/textView"
@@ -71,7 +73,7 @@
         android:id="@+id/colreftestBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ColRefTest" />
+        android:text="Bejelentkezés" />
 
     <TextView
         android:id="@+id/testTV"

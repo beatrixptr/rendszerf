@@ -45,16 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         nevET = findViewById(R.id.felhNevET);
         jelszoET = findViewById(R.id.felhJelszoET);
-        bejelentkezesBtn = findViewById(R.id.bejelentkezesBtn);
+        //bejelentkezesBtn = findViewById(R.id.bejelentkezesBtn);
         colreftestBtn = findViewById(R.id.colreftestBtn);
         tv = findViewById(R.id.textView);
         testTV = findViewById(R.id.testTV);
+        /*
         bejelentkezesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
-        });
+        });*/
         colreftestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         else{
-                            Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_SHORT).show();
                         }
                     }
                     tv.setText(data + String.valueOf(count));

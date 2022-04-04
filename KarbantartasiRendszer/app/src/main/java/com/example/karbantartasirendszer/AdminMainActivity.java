@@ -19,7 +19,10 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     public void addUser(View v){
-        Intent i = new Intent(this, addUser.class);
+        Intent i = new Intent(AdminMainActivity.this, addUser.class);
         startActivity(i);
     }
+
+
+
 }
