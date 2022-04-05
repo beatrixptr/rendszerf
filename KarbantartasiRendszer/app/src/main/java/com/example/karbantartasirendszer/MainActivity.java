@@ -65,6 +65,57 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void test(){
+        CollectionReference collectionReference = db.collection("Users");
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int count = 0;
+                    String data = "";
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        count++;
+                        data += document.getId()+"\n";
+                        String nev = nevET.getText().toString();
+                        String jelszo = jelszoET.getText().toString();
+                        if(nev.equals(document.getId()) && jelszo.equals(document.getString("pw"))){
+                            String szerep = document.getString("role");
+                            switch (szerep){
+                                case "admin":
+                                    Intent i = new Intent(MainActivity.this, AdminMainActivity.class);
+                                    startActivity(i);
+                                    break;
+                                case "eszközfelelős":
+                                    Intent b = new Intent(MainActivity.this, EszkozfelelosMainActivity.class);
+                                    startActivity(b);
+                                    break;
+                                case "operator":
+                                    testTV.setText("Operátor");
+                                    break;
+                                case "karbantarto":
+                                    testTV.setText("Karbantartó");
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    tv.setText(data + String.valueOf(count));
+                } else {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+
+
+
+
+    /*
     private void login(){
 
         DocumentReference felhRef = db.collection("Users").document(nevET.getText().toString());
@@ -98,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("login", e.toString());
             }
         });
-
+    }*/
 
         /*
         CollectionReference users = db.collection("Users");
@@ -160,52 +211,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,e.toString());
             }
         });*/
-    }
 
-    private void test(){
-        CollectionReference collectionReference = db.collection("Users");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int count = 0;
-                    String data = "";
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        count++;
-                        data += document.getId()+"\n";
-                        String nev = nevET.getText().toString();
-                        String jelszo = jelszoET.getText().toString();
-                        if(nev.equals(document.getId()) && jelszo.equals(document.getString("pw"))){
-                            String szerep = document.getString("role");
-                            switch (szerep){
-                                case "admin":
-                                    Intent i = new Intent(MainActivity.this, AdminMainActivity.class);
-                                    startActivity(i);
-                                    break;
-                                case "eszközfelelős":
-                                    Intent b = new Intent(MainActivity.this, EszkozfelelosMainActivity.class);
-                                    startActivity(b);
-                                    break;
-                                case "operator":
-                                    testTV.setText("Operátor");
-                                    break;
-                                case "karbantarto":
-                                    testTV.setText("Karbantartó");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    tv.setText(data + String.valueOf(count));
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
+
+
 
 }
