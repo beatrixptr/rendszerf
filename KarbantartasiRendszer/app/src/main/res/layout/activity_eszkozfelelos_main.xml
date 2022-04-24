@@ -34,22 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title1" />
 
-    <EditText
-        android:id="@+id/editVegzettsegKat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:hint="Szükséges végzettség..."
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/submitKat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNameKat" />
-
     <Button
         android:id="@+id/submitKat"
         android:layout_width="match_parent"
@@ -62,7 +46,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editVegzettsegKat" />
+        app:layout_constraintTop_toBottomOf="@+id/vegzettsegSpinner" />
 
     <TextView
         android:id="@+id/title2"
@@ -92,20 +76,6 @@
         app:layout_constraintTop_toBottomOf="@+id/title2" />
 
     <EditText
-        android:id="@+id/editKategoriaEszkoz"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Kategória..."
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNameEszkoz" />
-
-    <EditText
         android:id="@+id/editTipusEszkoz"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -117,7 +87,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editKategoriaEszkoz" />
+        app:layout_constraintTop_toBottomOf="@+id/kategoriaSpinner" />
 
     <EditText
         android:id="@+id/editAzonositoEszkoz"
@@ -145,118 +115,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAzonositoEszkoz" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="Új Végzettség hozzáadása"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitEszkoz" />
 
-        <TextView
-            android:id="@+id/Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Új kategória hozzáadása"
-            android:textSize="20sp" />
+    <EditText
+        android:id="@+id/editUjVegzettseg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="Név..."
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title3" />
 
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/addVegzettseg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Új végzettség hozzáadása"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editUjVegzettseg" />
 
-        <TextView
-            android:id="@+id/Azon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Azonosító"
-            android:textSize="20sp"
-            android:visibility="gone" />
+    <Spinner
+        android:id="@+id/vegzettsegSpinner"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNameKat" />
 
-        <EditText
-            android:id="@+id/EditAzon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
+    <Spinner
+        android:id="@+id/kategoriaSpinner"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNameEszkoz" />
 
-        <TextView
-            android:id="@+id/Kateg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kategória"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/EditKateg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/Com"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Leírás"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/EditCom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/KarIdo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Karbantartási időintervallum"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/EditKarIdo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/NormIdo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Norm Idő"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/EditNormIdo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/Instrukcio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Instrukciók"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/EditInstr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="gone" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -91,4 +91,9 @@ public class Kategoria {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return nev;
+    }
+
 }
