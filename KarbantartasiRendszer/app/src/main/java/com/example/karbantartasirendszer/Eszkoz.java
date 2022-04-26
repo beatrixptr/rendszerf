@@ -6,6 +6,7 @@ public class Eszkoz {
     public String azonosito;
     public String elhelyezkedes;
     public String tipus;
+    public String kategoria;
     public String leiras;
     public String karbantartasiido;
     public String normido;
@@ -31,6 +32,23 @@ public class Eszkoz {
         this.karbantartasiido = "";
         this.normido = "";
         this.instrukcio= "";
+    }
+
+    public Eszkoz(String Nev, String Kat, String Tipus) {
+        this.nev = Nev;
+        this.azonosito = "";
+        this.elhelyezkedes = "";
+        this.kategoria = Kat;
+        this.tipus = Tipus;
+        this.leiras = "";
+        this.karbantartasiido = "";
+        this.normido = "";
+        this.instrukcio= "";
+    }
+
+    @Override
+    public String toString() {
+        return nev;
     }
 
 

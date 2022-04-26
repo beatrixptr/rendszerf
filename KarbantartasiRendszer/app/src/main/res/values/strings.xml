@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KarbantartasiRendszer</string>
+    <string-array name="feladatTipus">
+        <item>Típus...</item>
+        <item>Rendkivuli</item>
+        <item>Idoszakos</item>
+    </string-array>
 </resources>

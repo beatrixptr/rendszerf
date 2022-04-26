@@ -15,13 +15,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Kategoria {
     public String nev;
-    private String eszkozAddResult;
-    private boolean kategoriaTipusResult;
+
 
     public Kategoria(String _nev)
     {
@@ -46,52 +46,35 @@ public class Kategoria {
         note.put("Instrukcio",eszk.instrukcio);
 
 
-            CollectionReference tipusCollection = rootRef.collection("Kategoriak/"+ this.nev + "/" + eszk.tipus);
+        CollectionReference tipusCollection = rootRef.collection("Kategoriak/"+ this.nev + "/" + eszk.tipus);
 
 
-            tipusCollection.document(eszk.nev).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    //Toast.makeText(getApplicationContext(),"Új eszköz elmentve", Toast.LENGTH_LONG).show();
-                    Log.d("teszt3", "Új eszköz( " + eszk.nev + " ) hozzáadva a " + nev + " kategóriához " + eszk.tipus + " tipussal");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Toast.makeText(getApplicationContext(),"Valami hiba tortent",Toast.LENGTH_LONG).show();
-                    Log.d("teszt3", "Nem sikerült az eszköz kategóriához rendelése!");
-                }
-            });
-
-
-//        Log.d("teszt", eszkozAddResult.toString());
-    }
-
-
-    public boolean vanKategoriaTipus(String tipus)
-    {
-        kategoriaTipusResult = false;
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        CollectionReference Generatorok = rootRef.collection("Kategoriak/"+ this.nev + "/" + tipus);
-        if(Generatorok != null)
-        {
-            kategoriaTipusResult = true;
-            Log.d("teszt3", "success");
-        }
-        /*Generatorok.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        tipusCollection.document(eszk.nev).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d("teszt3", "comparing path" + "Kategoriak/"+ nev + "/" + tipus + "  to " + task.getResult().toString());
-                if (task.isSuccessful()) {
-                    kategoriaTipusResult = true;
-                    Log.d("teszt3", "success");
-                }
+            public void onSuccess(Void unused) {
+                Log.d("teszt3", "Új eszköz( " + eszk.nev + " ) hozzáadva a " + nev + " kategóriához " + eszk.tipus + " tipussal");
+
+
+                CollectionReference AlKategoria = rootRef.collection("Alkategoriak");
+                Map<String, Object> lol = new HashMap<>();
+                AlKategoria.document(eszk.tipus).set(lol);
+
+                Loader.eszkozok.add(eszk);
             }
-        });*/
-        return false;
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.d("teszt3", "Nem sikerült az eszköz kategóriához rendelése!");
+            }
+        });
     }
 
-    @Override
+
+
+
+
+     @Override
     public String toString() {
         return nev;
     }

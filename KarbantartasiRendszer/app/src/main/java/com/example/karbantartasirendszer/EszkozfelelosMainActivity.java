@@ -31,14 +31,14 @@ import java.util.Map;
 
 public class EszkozfelelosMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private ArrayList<Kategoria> kategoriak;
-    private ArrayList<String> vegzettsegek;
+
+
     private String selectedVegzettseg;
     public  String selectedKategoria;
     private ArrayAdapter<String> adapterVegzettseg;
     private ArrayAdapter<Kategoria> adapterKategoria;
     private EditText EditNameKat, EditNameEszkoz, EditKatEszkoz, EditTipusEszkoz, EditAzonEszkoz, EditVegzettsegKat, EditUjVegzettseg;
-    private Button kuldes, kuldesEszkoz, AddVegzettseg;
+    private Button kuldes, kuldesEszkoz, AddVegzettseg, teszt;
     private Spinner vegzettsegSpinner, kategoriaSpinner;
     FirebaseFirestore rootRef;
 
@@ -48,17 +48,15 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         rootRef = FirebaseFirestore.getInstance();
         setContentView(R.layout.activity_eszkozfelelos_main);
 
-        kategoriak = new ArrayList<Kategoria>();
-        vegzettsegek = new ArrayList<String>();
-
         kategoriaSpinner = findViewById(R.id.kategoriaSpinner);
         kategoriaSpinner.setOnItemSelectedListener(this);
 
         vegzettsegSpinner = findViewById(R.id.vegzettsegSpinner);
         vegzettsegSpinner.setOnItemSelectedListener(this);
 
-        loadKategoriak();
-        loadVegzettsegek();
+        Loader.loadKategoriak();
+        Loader.loadVegzettsegek();
+
 
               //  EditPlace = findViewById(R.id.EditName);
         EditNameKat = findViewById(R.id.editNameKat);
@@ -69,7 +67,6 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         EditTipusEszkoz = findViewById(R.id.editTipusEszkoz);
         EditAzonEszkoz = findViewById(R.id.editAzonositoEszkoz);
         EditUjVegzettseg = findViewById(R.id.editUjVegzettseg);
-
 
 
         kuldes = findViewById(R.id.submitKat);
@@ -95,6 +92,39 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
                 AddEszkozToKategoria();
             }
         });
+
+
+
+
+
+        adapterKategoria = new ArrayAdapter<Kategoria>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Loader.kategoriak) {
+            // Disable click item < month current
+            @Override
+            public boolean isEnabled(int position) {
+                // TODO Auto-generated method stub
+                if(position == 0)
+                    return false;
+                return true;
+            }
+        };
+        adapterKategoria.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        kategoriaSpinner.setAdapter(adapterKategoria);
+
+        adapterVegzettseg = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Loader.vegzettsegek) {
+            // Disable click item < month current
+            @Override
+            public boolean isEnabled(int position) {
+                // TODO Auto-generated method stub
+                if(position == 0)
+                    return false;
+                return true;
+            }
+        };;
+        adapterVegzettseg.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        vegzettsegSpinner.setAdapter(adapterVegzettseg);
+
+       // Log.d("teszt4", Loader.kategoriak.get(1).nev);
+
     }
 
     public void AddKategoria()
@@ -117,7 +147,7 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(),"Új kategória hozzáadva", Toast.LENGTH_SHORT).show();
                 if(!kategoriaLetezik(ujKategoria))
-                    kategoriak.add(ujKategoria);
+                    Loader.kategoriak.add(ujKategoria);
             //    Kategoriak.document(ujKategoria.nev).update(note);
                 Kategoriak.document(ujKategoria.nev).update("Vegzettsegek", FieldValue.arrayUnion(selectedVegzettseg));
             }
@@ -131,9 +161,9 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
 
     private boolean kategoriaLetezik(Kategoria uj)
     {
-        for(int i=0; i<kategoriak.size(); i++)
+        for(int i=0; i<Loader.kategoriak.size(); i++)
         {
-            if(uj.nev.toString().equals(kategoriak.get(i).nev.toString()))
+            if(uj.nev.toString().equals(Loader.kategoriak.get(i).nev.toString()))
                 return true;
         }
         return false;
@@ -153,17 +183,17 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
            // String res =
           //  Log.d("teszt2", res);
             Log.d("teszt2", "lefut a katt");
-            kategoriak.get(katId).AddEszkoz(uj);
+            Loader.kategoriak.get(katId).AddEszkoz(uj);
         }
         Log.d("teszt2", "lefut a katt, de kivul");
     }
 
     private int getKategoriaIDByNev(String kat)
     {
-        for(int i=0; i<kategoriak.size(); i++)
+        for(int i=0; i<Loader.kategoriak.size(); i++)
         {
-            Log.d("teszt2", "osszehasonlitani:" + kat.toString() + " - " + kategoriak.get(i).nev.toString());
-            if(kat.equals(kategoriak.get(i).nev.toString()))
+            Log.d("teszt2", "osszehasonlitani:" + kat.toString() + " - " + Loader.kategoriak.get(i).nev.toString());
+            if(kat.equals(Loader.kategoriak.get(i).nev.toString()))
             {
                 return i;
             }
@@ -180,7 +210,7 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
             public void onSuccess(Void unused) {
                 //Toast.makeText(getApplicationContext(),"Új eszköz elmentve", Toast.LENGTH_LONG).show();
                 if(!vegzettsegLetezik(EditUjVegzettseg.getText().toString()))
-                    vegzettsegek.add(EditUjVegzettseg.getText().toString());
+                    Loader.vegzettsegek.add(EditUjVegzettseg.getText().toString());
                 Log.d("teszt3", "Új végzettség( " + EditUjVegzettseg.getText().toString() + " ) hozzáadva a végzettségekhez");
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -194,73 +224,14 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
 
     private boolean vegzettsegLetezik(String ujnev)
     {
-        for(int i=0; i<vegzettsegek.size(); i++)
+        for(int i=0; i<Loader.vegzettsegek.size(); i++)
         {
-            if(ujnev.equals(vegzettsegek.get(i)))
+            if(ujnev.equals(Loader.vegzettsegek.get(i)))
                 return true;
         }
         return false;
     }
 
-
-    private void loadKategoriak()
-    {
-        kategoriak.clear();
-        kategoriak.add(new Kategoria("Kategória..."));
-
-        CollectionReference Kategoriak = rootRef.collection("Kategoriak");
-        Kategoriak.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        kategoriak.add(new Kategoria(document.getId().toString()));
-                    }
-                    adapterKategoria = new ArrayAdapter<Kategoria>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, kategoriak) {
-                        // Disable click item < month current
-                        @Override
-                        public boolean isEnabled(int position) {
-                            // TODO Auto-generated method stub
-                           if(position == 0)
-                               return false;
-                            return true;
-                        }
-                    };
-                    adapterKategoria.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                    kategoriaSpinner.setAdapter(adapterKategoria);
-                }
-            }
-        });
-    }
-
-    private void loadVegzettsegek()
-    {
-        vegzettsegek.clear();
-        vegzettsegek.add("Végzettség...");
-        CollectionReference Vegzettsegek = rootRef.collection("Vegzettsegek");
-        Vegzettsegek.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        vegzettsegek.add(document.getId().toString());
-                    }
-                    adapterVegzettseg = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, vegzettsegek) {
-                        // Disable click item < month current
-                        @Override
-                        public boolean isEnabled(int position) {
-                            // TODO Auto-generated method stub
-                            if(position == 0)
-                                return false;
-                            return true;
-                        }
-                    };;
-                    adapterVegzettseg.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                    vegzettsegSpinner.setAdapter(adapterVegzettseg);
-                }
-            }
-        });
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

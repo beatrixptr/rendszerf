@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case "karbantarto":
                                     testTV.setText("Karbantartó");
+                                    Intent c = new Intent(MainActivity.this, KarbantartoMainActivity.class);
+                                    startActivity(c);
                                     break;
                                 default:
                                     break;
