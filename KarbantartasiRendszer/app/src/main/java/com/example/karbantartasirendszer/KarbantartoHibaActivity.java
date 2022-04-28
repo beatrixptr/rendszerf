@@ -58,7 +58,7 @@ public class KarbantartoHibaActivity extends AppCompatActivity implements Adapte
 
                 if(selectedKategoria == null || selectedEszkoz == null) return; //|| selectedTipus == null) return;
                 Log.d("karbantarto", "lefut");
-                new KarbantartasiFeladat(selectedEszkoz, "Rendkivuli", hibaleiras.getText().toString(), "Ütemezetlen");
+                new KarbantartasiFeladat(selectedEszkoz, "Rendkivuli", hibaleiras.getText().toString(), "Utemezetlen");
                   //       public KarbantartasiFeladat(Eszkoz _eszkoz, String _tipus, String _hiba_leiras)
             }
         });
@@ -76,7 +76,7 @@ public class KarbantartoHibaActivity extends AppCompatActivity implements Adapte
         adapterKategoria.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         katSpinner.setAdapter(adapterKategoria);
 
-        eszkozTemp.add(new Eszkoz("Eszközök...", ""));
+        eszkozTemp.add(new Eszkoz("Eszközök...", "", "", "", "", "", "", ""));
         adapterEszkoz = new ArrayAdapter<Eszkoz>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, eszkozTemp) {
             // Disable click item < month current
             @Override
@@ -99,7 +99,7 @@ public class KarbantartoHibaActivity extends AppCompatActivity implements Adapte
     {
 
         eszkozTemp.clear();
-        eszkozTemp.add(new Eszkoz("Eszközök...", ""));
+        eszkozTemp.add(new Eszkoz("Eszközök...", "", "", "", "", "", "", ""));
         selectedEszkoz = null;
         ArrayList<Eszkoz> megfeleloEszkoz = findEszkozByKategoria(selectedKategoria);
         for(int i=0;i<megfeleloEszkoz.size(); i++)

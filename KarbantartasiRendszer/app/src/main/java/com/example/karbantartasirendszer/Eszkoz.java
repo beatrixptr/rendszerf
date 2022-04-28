@@ -7,44 +7,21 @@ public class Eszkoz {
     public String elhelyezkedes;
     public String tipus;
     public String kategoria;
-    public String leiras;
-    public String karbantartasiido;
-    public String normido;
+    public String periodus;
+    public String normaido;
     public String instrukcio;
 
-    public Eszkoz(String Azonosito, String Elhelyezkedes, String Tipus ,String Leiras, String Karbantartasiido,String Normido,String Instrukcio) {
-
+    public Eszkoz(String Nev, String Kat, String Tipus, String Azonosito, String Elhelyezkedes, String Periodus,String Normaido,String Instrukcio) {
+        this.nev = Nev;
+        this.kategoria = Kat;
         this.azonosito = Azonosito;
         this.elhelyezkedes = Elhelyezkedes;
         this.tipus = Tipus;
-        this.leiras = Leiras;
-        this.karbantartasiido = Karbantartasiido;
-        this.normido = Normido;
+        this.periodus = Periodus;
+        this.normaido = Normaido;
         this.instrukcio= Instrukcio;
     }
 
-    public Eszkoz(String Nev, String Tipus ) {
-        this.nev = Nev;
-        this.azonosito = "";
-        this.elhelyezkedes = "";
-        this.tipus = Tipus;
-        this.leiras = "";
-        this.karbantartasiido = "";
-        this.normido = "";
-        this.instrukcio= "";
-    }
-
-    public Eszkoz(String Nev, String Kat, String Tipus) {
-        this.nev = Nev;
-        this.azonosito = "";
-        this.elhelyezkedes = "";
-        this.kategoria = Kat;
-        this.tipus = Tipus;
-        this.leiras = "";
-        this.karbantartasiido = "";
-        this.normido = "";
-        this.instrukcio= "";
-    }
 
     @Override
     public String toString() {

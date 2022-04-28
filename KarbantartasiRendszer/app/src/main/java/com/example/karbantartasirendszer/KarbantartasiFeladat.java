@@ -37,7 +37,7 @@ public class KarbantartasiFeladat {
         String feladatNev = eszkoz.nev + "-" + idopont;
 
         Map<String, Object> note = new HashMap<>();
-        note.put("eszkoz_nev", eszkoz.nev);
+        note.put("Eszkoz", eszkoz);
         note.put("tipus", tipus);
         note.put("hiba_leiras", hiba_leiras);
         note.put("idopont", idopont);

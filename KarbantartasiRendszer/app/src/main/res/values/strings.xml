@@ -5,4 +5,13 @@
         <item>Rendkivuli</item>
         <item>Idoszakos</item>
     </string-array>
+
+    <string-array name="periodusok">
+        <item>Periódus...</item>
+        <item>Naponta</item>
+        <item>Hetente</item>
+        <item>Havonta</item>
+        <item>6 Havonta</item>
+        <item>Evente</item>
+    </string-array>
 </resources>

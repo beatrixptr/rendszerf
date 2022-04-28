@@ -27,7 +27,7 @@ public class Loader {
     public static void loadKategoriak()
     {
         kategoriak.clear();
-        kategoriak.add(new Kategoria("Kategória..."));
+        kategoriak.add(new Kategoria("Kategória...", "", "", ""));
 
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference Kategoriak = rootRef.collection("Kategoriak");
@@ -36,7 +36,7 @@ public class Loader {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        kategoriak.add(new Kategoria(document.getId().toString()));
+                        kategoriak.add(new Kategoria(document.getId().toString(), document.getString("normaido"), document.getString("periodus"), document.getString("instrukcio")));
                     }
 
                     loadTipusok();
@@ -87,7 +87,7 @@ public class Loader {
     public static void loadOsszesEszkozok()
     {
         eszkozok.clear();
-        eszkozok.add(new Eszkoz("Eszközök...", ""));
+        eszkozok.add(new Eszkoz("Eszközök...", "", "", "", "", "", "", ""));
         for(int i=1; i<kategoriak.size(); i++)
         {
             for(int j=0; j<tipusok.size(); j++)
@@ -109,11 +109,12 @@ public class Loader {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful())
                 {
+                    //String Nev, String Kat, String Tipus, String Azonosito, String Elhelyezkedes, String Periodus,String Normaido,String Instru
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        eszkozok.add(new Eszkoz(document.getId(),kat.nev, tipus));
+                        eszkozok.add(new Eszkoz(document.getId(),kat.nev, document.getString("tipus"), document.getString("azonosito"), document.getString("elhelyezkedes"), document.getString("periodus"), document.getString("normaido"), document.getString("instrukcio")));
                     }
                 }
-
+              //  showEszkozok();
             }
         });
 
@@ -124,7 +125,7 @@ public class Loader {
         Log.d("teszt4", "eszközök size:" + eszkozok.size());
         for(int i=1; i<eszkozok.size(); i++)
         {
-            Log.d("teszt4", "Név: " + eszkozok.get(i).nev + " Kategoria: " + eszkozok.get(i).kategoria + " Tipus: " + eszkozok.get(i).tipus);
+            Log.d("teszt4", "Név: " + eszkozok.get(i).nev + " Kategoria: " + eszkozok.get(i).kategoria + " Tipus: " + eszkozok.get(i).tipus + " Norma: " + eszkozok.get(i).normaido);
         }
     }
 

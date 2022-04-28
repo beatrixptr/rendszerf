@@ -33,13 +33,14 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
 
 
 
-    private String selectedVegzettseg;
-    public  String selectedKategoria;
+    private String selectedVegzettseg, selectedKategoria, selectedPeriodusKat, selectedPeriodusEszk;
     private ArrayAdapter<String> adapterVegzettseg;
+    private ArrayAdapter<CharSequence> adapterPeriodusKat, adapterPeriodusEszk;
     private ArrayAdapter<Kategoria> adapterKategoria;
-    private EditText EditNameKat, EditNameEszkoz, EditKatEszkoz, EditTipusEszkoz, EditAzonEszkoz, EditVegzettsegKat, EditUjVegzettseg;
+    private EditText EditNameKat, EditNameEszkoz, EditKatEszkoz, EditTipusEszkoz, EditAzonEszkoz, EditVegzettsegKat, EditUjVegzettseg, EditNormaKat, EditNormaEszk, EditInstrukcioKat, EditInstrukcioEszk, EditHely;
     private Button kuldes, kuldesEszkoz, AddVegzettseg, teszt;
-    private Spinner vegzettsegSpinner, kategoriaSpinner;
+    private Spinner vegzettsegSpinner, kategoriaSpinner, periodusSpinnerKat, periodusSpinnerEszk;
+
     FirebaseFirestore rootRef;
 
     @Override
@@ -51,12 +52,17 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         kategoriaSpinner = findViewById(R.id.kategoriaSpinner);
         kategoriaSpinner.setOnItemSelectedListener(this);
 
+        periodusSpinnerKat = findViewById(R.id.periodusSpinnerKat);
+        periodusSpinnerKat.setOnItemSelectedListener(this);
+
+        periodusSpinnerEszk = findViewById(R.id.periodusSpinnerEszk);
+        periodusSpinnerEszk.setOnItemSelectedListener(this);
+
         vegzettsegSpinner = findViewById(R.id.vegzettsegSpinner);
         vegzettsegSpinner.setOnItemSelectedListener(this);
 
         Loader.loadKategoriak();
         Loader.loadVegzettsegek();
-
 
               //  EditPlace = findViewById(R.id.EditName);
         EditNameKat = findViewById(R.id.editNameKat);
@@ -68,6 +74,11 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         EditAzonEszkoz = findViewById(R.id.editAzonositoEszkoz);
         EditUjVegzettseg = findViewById(R.id.editUjVegzettseg);
 
+        EditNormaKat = findViewById(R.id.editNormaKat);
+        EditInstrukcioKat = findViewById(R.id.editInstrukcioKat);
+        EditNormaEszk = findViewById(R.id.editNormaEszk);
+        EditInstrukcioEszk = findViewById(R.id.editInstrukcioEszk);
+        EditHely = findViewById(R.id.editHely);
 
         kuldes = findViewById(R.id.submitKat);
         kuldes.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +103,6 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
                 AddEszkozToKategoria();
             }
         });
-
-
 
 
 
@@ -123,24 +132,35 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         adapterVegzettseg.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         vegzettsegSpinner.setAdapter(adapterVegzettseg);
 
-       // Log.d("teszt4", Loader.kategoriak.get(1).nev);
 
+        adapterPeriodusKat = ArrayAdapter.createFromResource(this, R.array.periodusok, android.R.layout.simple_spinner_dropdown_item);
+        adapterPeriodusKat.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        periodusSpinnerKat.setAdapter(adapterPeriodusKat);
+
+        adapterPeriodusEszk = ArrayAdapter.createFromResource(this, R.array.periodusok, android.R.layout.simple_spinner_dropdown_item);
+        adapterPeriodusEszk.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        periodusSpinnerEszk.setAdapter(adapterPeriodusEszk);
+
+        periodusSpinnerKat.setSelection(0, false);
     }
 
     public void AddKategoria()
     {
 
+        if(EditNormaKat.getText().toString().isEmpty() || selectedPeriodusKat == null || selectedVegzettseg == null)
+        {
+            Toast.makeText(getApplicationContext(),"Szükséges adatok nincsenek megadva!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         CollectionReference Kategoriak = rootRef.collection("Kategoriak");
-        Kategoria ujKategoria = new Kategoria(EditNameKat.getText().toString());
+        Kategoria ujKategoria = new Kategoria(EditNameKat.getText().toString(), EditNormaKat.getText().toString(), selectedPeriodusKat, EditInstrukcioKat.getText().toString());
 
         Log.d("teszt", "hozzaadva" + ujKategoria.nev.toString());
         Map<String, Object> note = new HashMap<>();
+        note.put("normaido", EditNormaKat.getText().toString());
+        note.put("periodus", selectedPeriodusKat);
+        note.put("instrukcio", EditInstrukcioKat.getText().toString());
         Log.d("teszt", EditNameKat.getText().toString());
-        if(selectedVegzettseg == null)
-        {
-            Toast.makeText(getApplicationContext(),"Szükséges végzettség nincs kiválasztva!", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         Kategoriak.document(ujKategoria.nev).set(note, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -179,11 +199,13 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         int katId = getKategoriaIDByNev(selectedKategoria);
         if( katId != -1)
         {
-            Eszkoz uj = new Eszkoz(EditNameEszkoz.getText().toString(), EditTipusEszkoz.getText().toString());
+            //String Nev, String Kat, String Tipus, String Azonosito, S
+            //String Azonosito, String Elhelyezkedes, String Tipus, String Karbantartasido,String Normaido,String Instrukcio
+            Eszkoz uj = new Eszkoz(EditNameEszkoz.getText().toString(), selectedKategoria, EditTipusEszkoz.getText().toString(), EditAzonEszkoz.getText().toString(), EditHely.getText().toString(), selectedPeriodusEszk, EditNormaEszk.getText().toString(), EditInstrukcioEszk.getText().toString());//EditNameEszkoz.getText().toString(), EditTipusEszkoz.getText().toString());
            // String res =
           //  Log.d("teszt2", res);
             Log.d("teszt2", "lefut a katt");
-            Loader.kategoriak.get(katId).AddEszkoz(uj);
+            Loader.kategoriak.get(katId).AddEszkoz(uj, selectedPeriodusEszk);
         }
         Log.d("teszt2", "lefut a katt, de kivul");
     }
@@ -242,6 +264,20 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
             case R.id.kategoriaSpinner:
                     selectedKategoria = parent.getItemAtPosition(pos).toString();
                 break;
+            case R.id.periodusSpinnerKat:
+                    if(pos == 0)
+                        selectedPeriodusKat = null;
+                    else
+                        selectedPeriodusKat = parent.getItemAtPosition(pos).toString();
+
+                   // Log.d("teszt6", selectedPeriodusKat);
+                break;
+            case R.id.periodusSpinnerEszk:
+                    if(pos == 0)
+                        selectedPeriodusEszk = null;
+                    else
+                        selectedPeriodusEszk = parent.getItemAtPosition(pos).toString();
+                break;
             default:
                 break;
         }
@@ -251,6 +287,14 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
 
         if(selectedKategoria == "Kategória...")
             selectedKategoria = null;
+
+        if(selectedPeriodusKat == "Periódus...")
+            selectedPeriodusKat = null;
+
+        if(selectedPeriodusEszk == "Periódus...")
+            selectedPeriodusEszk = null;
+
+
     }
 
     @Override
