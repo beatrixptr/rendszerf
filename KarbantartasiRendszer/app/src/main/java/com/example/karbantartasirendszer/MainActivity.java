@@ -85,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
                                     Intent i = new Intent(MainActivity.this, AdminMainActivity.class);
                                     startActivity(i);
                                     break;
-                                case "eszközfelelős":
+                                case "eszkozfelelos":
                                     Intent b = new Intent(MainActivity.this, EszkozfelelosMainActivity.class);
                                     startActivity(b);
                                     break;
                                 case "operator":
-                                    testTV.setText("Operátor");
+                                    Intent op = new Intent(MainActivity.this, OperatorMainActivity.class);
+                                    startActivity(op);
                                     break;
                                 case "karbantarto":
                                     testTV.setText("Karbantartó");

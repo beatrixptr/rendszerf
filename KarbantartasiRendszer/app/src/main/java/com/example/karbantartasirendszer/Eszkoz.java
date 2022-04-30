@@ -11,6 +11,8 @@ public class Eszkoz {
     public String normaido;
     public String instrukcio;
 
+
+
     public Eszkoz(String Nev, String Kat, String Tipus, String Azonosito, String Elhelyezkedes, String Periodus,String Normaido,String Instrukcio) {
         this.nev = Nev;
         this.kategoria = Kat;
