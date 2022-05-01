@@ -16,129 +16,117 @@ import java.util.concurrent.TimeUnit;
 
 
 public class statuscheck {
-    public static ArrayList<KarbantartasiFeladat> feladatok = null;
-    public static ArrayList<Eszkoz> eszkozok = null;
+
     public static int asd = 0;
     public static void eszkoz_allapotanak_ellenorzese(){
 
+       for(int i=1; i<Loader.eszkozok.size(); i++)
+       {
+           Log.d("teszt11", "lefut");
+               check(Loader.eszkozok.get(i));
 
 
-            laodeszk();
-
-            feladatok = KarbantartasKezelo.getFeladatok();
-            eszkozok = EszkozList.eszkozok;
-
-            Log.d("eszkSTATUS",Integer.toString(eszkozok.size()));
-            Log.d("KARB",Integer.toString(feladatok.size()));
-
-
-                    for (Eszkoz value: eszkozok) {
-                        Log.d("ASd","EszkozForeach");
-                        //try{
-                            String a =value.getPeriodus();
-                            String b =value.getKategoria();
-                            String c =value.getNev_eszkoz();
-                            ArrayList<KarbantartasiFeladat> g = feladatok;
-                            Eszkoz d = value;
-                            check(d,g);
-                        /*}catch (NullPointerException i){
-                            Log.d("23123", "valamihiba ");
-                        }*/
-
-                    }
-
-
-
-
+        }
 
     }
 
+    public static KarbantartasiFeladat getEszkozFeladat(Eszkoz eszk)
+    {
+        for(int i=1; i<KarbantartasKezelo.feladatok.size(); i++)
+        {
+            if(eszk.nev.equals(KarbantartasKezelo.feladatok.get(i).eszkoz.nev) && eszk.tipus.equals(KarbantartasKezelo.feladatok.get(i).eszkoz.tipus) && eszk.kategoria.equals( KarbantartasKezelo.feladatok.get(i).eszkoz.kategoria))
+                return KarbantartasKezelo.feladatok.get(i);
+        }
+        return null;
+    }
 
+    private static void check(Eszkoz eszk){
+        Log.d("teszt11", "lefut");
+        KarbantartasiFeladat kar = getEszkozFeladat(eszk);
+        if(kar != null)
+        {
+            Log.d("teszt11", "van ilyen kar");
+             if(kar.statusz.equals("Befejezve") && kar.tipus.equals("Idoszakos")){
 
-    private static void check(Eszkoz eszk,ArrayList<KarbantartasiFeladat> feladatok){
+                String[] reszek = kar.idopont.split("-");
+                int nap = Integer.parseInt(reszek[1]);
+                int honap = Integer.parseInt(reszek[2]);
+                int ev = Integer.parseInt(reszek[3]);
 
-        Log.d("ASd","Check");
-        int a = 0;
-        Log.d("ASd","kar-nev-ifEA");
-        Log.d("asd23", feladatok.get(1).getStatusz());
-        for (KarbantartasiFeladat kar : feladatok) {
-            Eszkoz dk = kar.getEszkoz();
-            Log.d("ASd","LEFUTTATJA");
-            String nev = kar.eszkoz.nev; // dk.getNev_eszkoz() -> ez sem jo
-            Log.d("ASd","LEFUTTATJA");
-            String kat = dk.kategoria; // dk.getKategoria()-> ez sem jo
-            Log.d("ASd","LEFUTTATJA");
-
-            Log.d("ASd","kar-nev-ifE");
-            if( nev.equals(eszk.getNev_eszkoz()) && kat.equals(eszk.getKategoria())){
-                a = 1;
-                Log.d("ASd","kar-nev-if");
-                if(kar.getStatusz().equals("befejezve")){
-
-                    String[] reszek = kar.getIdopont().split("-");
-                    int nap = Integer.parseInt(reszek[1]);
-                    int honap = Integer.parseInt(reszek[2]);
-                    int ev = Integer.parseInt(reszek[3]);
-
-                    switch (eszk.getPeriodus()) {
-                        case "Hetente":
-                            nap += 7;
-                            if (nap >= 29 && honap == 2) {
-                                if(ev % 4 == 0 || ( ev % 100 == 0 && ev % 400 == 0 ) ) {
-                                    if(nap > 29) { nap = nap - 29; honap++; }
-                                }else{
-                                    nap = nap - 28;
-                                    honap++;
-                                }
-
-                            } else if (nap >= 31 && (honap == 4 || honap == 6 || honap == 9 || honap == 11)) {
-                                nap = nap - 30;
+                switch (eszk.periodus) {
+                    case "Hetente":
+                        nap += 7;
+                        if (nap >= 29 && honap == 2) {
+                            if(ev % 4 == 0 || ( ev % 100 == 0 && ev % 400 == 0 ) ) {
+                                if(nap > 29) { nap = nap - 29; honap++; }
+                            }else{
+                                nap = nap - 28;
                                 honap++;
-                            } else if (nap >= 32 && (honap == 1 || honap == 3 || honap == 5 || honap == 7 || honap == 8 || honap == 10)){
-                                nap = nap - 31;
-                                honap++;
-                            } else if(nap >= 32 && honap==12){
-                                nap = nap - 31;
-                                honap=1;
-                                ev++;
                             }
 
-                            break;
-                        case "Havonta":
-                            honap += 1;
-                            if(honap==13){
-                                honap=1;
-                            }
-                            break;
-                        case "Negyedevente":
-                            honap += 3;
-                            if(honap>=13){
-                                honap=honap-12;
-                            }
-                            break;
-                        case "Evente":
+                        } else if (nap >= 31 && (honap == 4 || honap == 6 || honap == 9 || honap == 11)) {
+                            nap = nap - 30;
+                            honap++;
+                        } else if (nap >= 32 && (honap == 1 || honap == 3 || honap == 5 || honap == 7 || honap == 8 || honap == 10)){
+                            nap = nap - 31;
+                            honap++;
+                        } else if(nap >= 32 && honap==12){
+                            nap = nap - 31;
+                            honap=1;
                             ev++;
-                            break;
-                        default:
-                            break;
-                    }
-                    Log.d("ASd","sw-utan");
+                        }
 
-                    String ujido = reszek[0] + "-" + nap + "-" + honap + "-" + ev;
-
-                    addKarbantartasiFeladat(kar.getEszkoz(), kar.getTipus(),kar.getHiba_leiras(),ujido);
+                        break;
+                    case "Havonta":
+                        honap += 1;
+                        if(honap==13){
+                            honap=1;
+                        }
+                        break;
+                    case "Negyedevente":
+                        honap += 3;
+                        if(honap>=13){
+                            honap=honap-12;
+                        }
+                        break;
+                    case "Evente":
+                        ev++;
+                        break;
+                    default:
+                        break;
                 }
+                Log.d("ASd","sw-utan");
+
+                String ujido = reszek[0] + "-" + nap + "-" + honap + "-" + ev;
+
+
+                KarbantartasiFeladat ujFeladat = new KarbantartasiFeladat(kar.eszkoz, kar.tipus, kar.hiba_leiras, "Utemezetlen", ujido);
+                ujFeladat.addKarbantartasiFeladat();
+
+                deleteRegi(kar);
+
             }
         }
 
-        /*if(a==0){
-            String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-            String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-            String idos = currentTime + "-" + currentDate;
-            addKarbantartasiFeladat(eszk, eszk.getTipus(),"Automatikusan generalt->Altalanos karbantartas szukseges",idos);
-        }*/
+    }
+
+    public static void deleteRegi(KarbantartasiFeladat regi)
+    {
+        for(int i=1; i<KarbantartasKezelo.feladatok.size(); i++)
+        {
+            if(KarbantartasKezelo.feladatok.get(i) == regi)
+            {
+                KarbantartasKezelo.feladatok.remove(i);
+            }
+        }
+
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference Karbantartas = rootRef.collection("Karbantartasok");
+        String feladatNev = regi.eszkoz.nev + "-" + regi.idopont;
+        Karbantartas.document(feladatNev).delete();
 
     }
+
 
     private static void addKarbantartasiFeladat(Eszkoz eszkoz, String tipus, String hiba_leiras, String idopont)
     {
@@ -158,16 +146,5 @@ public class statuscheck {
         Karbantartas.document(feladatNev).set(note);
     }
 
-    private static void laodeszk()
-    {
-        ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
 
-
-        for(int i=0; i<Loader.eszkozok.size(); i++)
-        {
-            EszkozList.eszkozok.add(Loader.eszkozok.get(i));
-
-        }
-
-    }
 }

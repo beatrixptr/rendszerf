@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Loader.loadKategoriak();
+        Loader.loadKarbantartasiFeladatok();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d("teszt10", String.valueOf(Loader.eszkozok.size()));
+                Log.d("teszt10", String.valueOf(KarbantartasKezelo.feladatok.size()));
+                statuscheck.eszkoz_allapotanak_ellenorzese();
+            }
+        }, 10000);   //5 seconds
+
+
+
 
         nevET = findViewById(R.id.felhNevET);
         jelszoET = findViewById(R.id.felhJelszoET);
@@ -72,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    OperatorMainActivity.loadKarbantartasiFeladatok();
+
 
                     int count = 0;
                     String data = "";

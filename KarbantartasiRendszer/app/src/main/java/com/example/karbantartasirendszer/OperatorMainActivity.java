@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class OperatorMainActivity extends AppCompatActivity {
 
-    static Eszkoz eszkTemp;
+    Eszkoz eszkTemp;
 
 
     private TextView cTV, hibaTV,allapotTV,tipusTV,idopontTV;
@@ -53,7 +53,7 @@ public class OperatorMainActivity extends AppCompatActivity {
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadKarbantartasiFeladatok();
+                Loader.loadKarbantartasiFeladatok();
             }
         });
 
@@ -81,10 +81,10 @@ public class OperatorMainActivity extends AppCompatActivity {
                 selectedFeladat = (KarbantartasiFeladat) parent.getItemAtPosition(pos);
                 selectedPos = pos;
 
-                hibaTV.setText(selectedFeladat.getHiba_leiras());
-                allapotTV.setText(selectedFeladat.getStatusz());
-                tipusTV.setText(selectedFeladat.getTipus());
-                idopontTV.setText(selectedFeladat.getIdopont());
+                hibaTV.setText(selectedFeladat.hiba_leiras);
+                allapotTV.setText(selectedFeladat.statusz);
+                tipusTV.setText(selectedFeladat.tipus);
+                idopontTV.setText(selectedFeladat.idopont);
 
             }
 
@@ -95,44 +95,5 @@ public class OperatorMainActivity extends AppCompatActivity {
         });
     }
 
-    public static void loadKarbantartasiFeladatok(){
-        KarbantartasKezelo.feladatok.clear();
-        KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
-        CollectionReference karbantartasokReference = db.collection("Karbantartasok");
-        karbantartasokReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult()){
 
-                        Map data = document.getData();
-                        Map eszk = (Map) data.get("Eszkoz");
-                        String eszkNev = (String) eszk.get("nev");
-                        String azonosito = (String) eszk.get("azonosito");
-                        String elhelyezkedes = (String) eszk.get("elhelyezkedes");
-                        String tipus = (String) eszk.get("tipus");
-                        String kategoria = (String) eszk.get("kategoria");
-                        String periodus = (String) eszk.get("periodus");
-                        String normaido = (String) eszk.get("normaido");
-                        String instrukcio = (String) eszk.get("instrukcio");
-                        Eszkoz eszkoz = new Eszkoz(eszkNev,kategoria,tipus,azonosito,elhelyezkedes,periodus,normaido,instrukcio);
-                        String hiba = document.getString("hiba_leiras");
-                        String idopont = document.getString("idopont");
-                        String statusz = document.getString("statusz");
-                        String karbTipus = document.getString("tipus");
-                        KarbantartasiFeladat feladat = new KarbantartasiFeladat(eszkoz,tipus,hiba,statusz,idopont);
-
-                        KarbantartasKezelo.feladatok.add(feladat);
-                    }
-
-
-                }
-                Log.d("KARB1",Integer.toString(KarbantartasKezelo.feladatok.size()));
-                Loader.loadKategoriak();
-
-
-            }
-        });
-    }
 }

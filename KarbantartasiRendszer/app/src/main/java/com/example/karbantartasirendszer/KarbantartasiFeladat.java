@@ -11,39 +11,23 @@ import java.util.Locale;
 import java.util.Map;
 
 public class KarbantartasiFeladat {
-    Eszkoz eszkoz;
-    String tipus = "Rendkivuli";
-    String hiba_leiras;
-    String idopont;
-    String statusz;
+    public String feladatnev;
+    public Eszkoz eszkoz;
+    public String tipus;
+    public String hiba_leiras;
+    public String idopont;
+    public String statusz;
 
-    public Eszkoz getEszkoz() {
-        return eszkoz;
-    }
-
-    public String getTipus() {
-        return tipus;
-    }
-
-    public String getHiba_leiras() {
-        return hiba_leiras;
-    }
-
-    public String getIdopont() {
-        return idopont;
-    }
-
-    public String getStatusz() {
-        return statusz;
-    }
 
     public KarbantartasiFeladat(Eszkoz _eszkoz, String _tipus, String _hiba_leiras, String _statusz, String _idopont)
     {
+
         eszkoz = _eszkoz;
         tipus = _tipus;
         hiba_leiras = _hiba_leiras;
         idopont = _idopont; //String.valueOf(new Date().getTime());
         statusz = _statusz;
+
         //addKarbantartasiFeladat();
     }
     public KarbantartasiFeladat(Eszkoz _eszkoz, String _tipus, String _hiba_leiras, String _statusz)
@@ -55,15 +39,16 @@ public class KarbantartasiFeladat {
         hiba_leiras = _hiba_leiras;
         idopont = currentTime + "-" + currentDate; //String.valueOf(new Date().getTime());
         statusz = _statusz;
+
         addKarbantartasiFeladat();
     }
 
-    private void addKarbantartasiFeladat()
+    public void addKarbantartasiFeladat()
     {
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference Karbantartas = rootRef.collection("Karbantartasok");
 
-        String feladatNev = eszkoz.nev + "-" + idopont;
+       String feladatNev = eszkoz.nev + "-" + idopont;
 
         Map<String, Object> note = new HashMap<>();
         note.put("Eszkoz", eszkoz);
@@ -74,6 +59,7 @@ public class KarbantartasiFeladat {
 
         Karbantartas.document(feladatNev).set(note);
     }
+
 
     @Override
     public String toString(){
