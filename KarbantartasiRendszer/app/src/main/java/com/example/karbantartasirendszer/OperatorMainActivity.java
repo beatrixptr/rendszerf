@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class OperatorMainActivity extends AppCompatActivity {
 
-    Eszkoz eszkTemp;
+    static Eszkoz eszkTemp;
 
 
     private TextView cTV, hibaTV,allapotTV,tipusTV,idopontTV;
@@ -34,10 +34,11 @@ public class OperatorMainActivity extends AppCompatActivity {
     int selectedPos;
     ArrayAdapter<KarbantartasiFeladat> adapterFeladat;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_main);
 
@@ -94,7 +95,7 @@ public class OperatorMainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadKarbantartasiFeladatok(){
+    public static void loadKarbantartasiFeladatok(){
         KarbantartasKezelo.feladatok.clear();
         KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
         CollectionReference karbantartasokReference = db.collection("Karbantartasok");
@@ -125,11 +126,12 @@ public class OperatorMainActivity extends AppCompatActivity {
                         KarbantartasKezelo.feladatok.add(feladat);
                     }
 
+
                 }
-                else
-                {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
+                Log.d("KARB1",Integer.toString(KarbantartasKezelo.feladatok.size()));
+                Loader.loadKategoriak();
+
+
             }
         });
     }

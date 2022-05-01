@@ -114,7 +114,7 @@ public class Loader {
                         eszkozok.add(new Eszkoz(document.getId(),kat.nev, document.getString("tipus"), document.getString("azonosito"), document.getString("elhelyezkedes"), document.getString("periodus"), document.getString("normaido"), document.getString("instrukcio")));
                     }
                 }
-              //  showEszkozok();
+                //  showEszkozok();
             }
         });
 

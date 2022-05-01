@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });*/
+
         colreftestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    OperatorMainActivity.loadKarbantartasiFeladatok();
+
                     int count = 0;
                     String data = "";
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         String jelszo = jelszoET.getText().toString();
                         if(nev.equals(document.getId()) && jelszo.equals(document.getString("pw"))){
                             String szerep = document.getString("role");
+
                             switch (szerep){
                                 case "admin":
                                     Intent i = new Intent(MainActivity.this, AdminMainActivity.class);

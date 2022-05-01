@@ -114,6 +114,7 @@ public class KarbantartoHibaActivity extends AppCompatActivity implements Adapte
     private ArrayList<Eszkoz> findEszkozByKategoria(String katnev)
     {
         ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
+        statuscheck.eszkoz_allapotanak_ellenorzese();
         //Log.d("karbantarto", Loader.eszkozok.get(0).nev);
        for(int i=0; i<Loader.eszkozok.size(); i++)
         {
