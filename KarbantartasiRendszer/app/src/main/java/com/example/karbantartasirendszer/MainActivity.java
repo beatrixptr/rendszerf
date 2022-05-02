@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("teszt10", String.valueOf(KarbantartasKezelo.feladatok.size()));
                 statuscheck.eszkoz_allapotanak_ellenorzese();
             }
-        }, 10000);   //5 seconds
+        }, 3000);   //5 seconds
 
 
 
