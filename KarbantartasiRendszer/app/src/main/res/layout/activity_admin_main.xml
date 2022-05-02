@@ -17,4 +17,5 @@
         android:layout_height="81dp"
         android:onClick="addUser"
         android:text="Új felhasználó felvétele" />
+
 </LinearLayout>

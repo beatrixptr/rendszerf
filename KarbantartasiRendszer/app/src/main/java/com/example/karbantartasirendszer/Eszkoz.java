@@ -31,19 +31,4 @@ public class Eszkoz {
     }
 
 
-    public String getPeriodus(){
-        return periodus;
-    }
-    public String getTipus(){
-        return tipus;
-    }
-
-    public String getKategoria(){
-        return kategoria;
-    }
-    public String getNev_eszkoz(){
-        return nev;
-    }
-
-
 }

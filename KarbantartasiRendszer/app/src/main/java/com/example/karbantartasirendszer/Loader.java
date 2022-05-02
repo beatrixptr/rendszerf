@@ -16,7 +16,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Loader {
 
@@ -24,6 +23,7 @@ public class Loader {
     public static ArrayList<String> tipusok = new ArrayList<String>();
     public static ArrayList<String> vegzettsegek = new ArrayList<String>();
     public static ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
+    public static ArrayList<String> felhasznalok = new ArrayList<String>();
 
     public static void loadKategoriak()
     {
@@ -115,57 +115,26 @@ public class Loader {
                         eszkozok.add(new Eszkoz(document.getId(),kat.nev, document.getString("tipus"), document.getString("azonosito"), document.getString("elhelyezkedes"), document.getString("periodus"), document.getString("normaido"), document.getString("instrukcio")));
                     }
                 }
-                showEszkozok();
+              //  showEszkozok();
             }
         });
 
     }
 
-    public static void loadKarbantartasiFeladatok(){
-        Eszkoz eszkTemp = new Eszkoz("Válasszon...", "", "", "", "", "", "", "");
-        KarbantartasKezelo.feladatok.clear();
-        KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference karbantartasokReference = db.collection("Karbantartasok");
-        karbantartasokReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public static void loadFelhasznalok()
+    {
+        felhasznalok.clear();
+        felhasznalok.add("Név...");
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference Users = rootRef.collection("Users");
+        Users.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult()){
-
-                        Map data = document.getData();
-                        Map eszk = (Map) data.get("Eszkoz");
-                        String eszkNev = (String) eszk.get("nev");
-                        String azonosito = (String) eszk.get("azonosito");
-                        String elhelyezkedes = (String) eszk.get("elhelyezkedes");
-                        String tipus = (String) eszk.get("tipus");
-                        String kategoria = (String) eszk.get("kategoria");
-                        String periodus = (String) eszk.get("periodus");
-                        String normaido = (String) eszk.get("normaido");
-                        String instrukcio = (String) eszk.get("instrukcio");
-                        Eszkoz eszkoz = new Eszkoz(eszkNev,kategoria,tipus,azonosito,elhelyezkedes,periodus,normaido,instrukcio);
-                        String hiba = document.getString("hiba_leiras");
-                        String idopont = document.getString("idopont");
-                        String statusz = document.getString("statusz");
-                        String karbTipus = document.getString("tipus");
-                        KarbantartasiFeladat feladat = new KarbantartasiFeladat(eszkoz,karbTipus,hiba,statusz,idopont);
-
-                        KarbantartasKezelo.feladatok.add(feladat);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        felhasznalok.add(document.getId().toString());
                     }
 
-
-
-                }
-                else
-                {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-
-                Log.d("teszt10", "KARBANTARTAS MOST FELTOLTVE" + KarbantartasKezelo.feladatok.size());
-                for(int i=0; i<KarbantartasKezelo.feladatok.size(); i++)
-                {
-                    Log.d("teszt10", KarbantartasKezelo.feladatok.get(i).eszkoz.nev);
                 }
             }
         });

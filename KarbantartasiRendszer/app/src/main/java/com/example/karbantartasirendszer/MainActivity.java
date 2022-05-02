@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,20 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Loader.loadKategoriak();
-        Loader.loadKarbantartasiFeladatok();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                Log.d("teszt10", String.valueOf(Loader.eszkozok.size()));
-                Log.d("teszt10", String.valueOf(KarbantartasKezelo.feladatok.size()));
-                statuscheck.eszkoz_allapotanak_ellenorzese();
-            }
-        }, 10000);   //5 seconds
-
-
-
 
         nevET = findViewById(R.id.felhNevET);
         jelszoET = findViewById(R.id.felhJelszoET);
@@ -71,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });*/
-
         colreftestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
-
                     int count = 0;
                     String data = "";
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -98,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                         String jelszo = jelszoET.getText().toString();
                         if(nev.equals(document.getId()) && jelszo.equals(document.getString("pw"))){
                             String szerep = document.getString("role");
-
                             switch (szerep){
                                 case "admin":
                                     Intent i = new Intent(MainActivity.this, AdminMainActivity.class);
