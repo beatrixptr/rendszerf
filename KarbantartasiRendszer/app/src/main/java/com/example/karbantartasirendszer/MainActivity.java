@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 statuscheck.eszkoz_allapotanak_ellenorzese();
             }
         }, 3000);   //5 seconds
-
-
 
 
         nevET = findViewById(R.id.felhNevET);

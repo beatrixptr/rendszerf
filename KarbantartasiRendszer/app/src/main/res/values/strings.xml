@@ -16,8 +16,8 @@
     </string-array>
 
     <string-array name="roles">
-        <item>Eszkozfelelos</item>
-        <item>Operator</item>
-        <item>Karbantarto</item>
+        <item>eszkozfelelos</item>
+        <item>operator</item>
+        <item>karbantarto</item>
     </string-array>
 </resources>

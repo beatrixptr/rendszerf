@@ -58,7 +58,7 @@ public class KarbantartasiFeladat {
         addKarbantartasiFeladat();
     }
 
-    private void addKarbantartasiFeladat()
+    public void addKarbantartasiFeladat()
     {
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference Karbantartas = rootRef.collection("Karbantartasok");

@@ -34,7 +34,7 @@ public class KarbantartoHibaActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_karbantarto_hiba);
-        Loader.loadKategoriak();
+        //Loader.loadKategoriak();
         eszkozTemp = new ArrayList<Eszkoz>();
 
         hibaleiras = findViewById(R.id.hiba_leiras);

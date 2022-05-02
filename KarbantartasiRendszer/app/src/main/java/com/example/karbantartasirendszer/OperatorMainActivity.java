@@ -52,7 +52,7 @@ public class OperatorMainActivity extends AppCompatActivity {
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadKarbantartasiFeladatok();
+                Loader.loadKarbantartasiFeladatok();
             }
         });
 
@@ -94,43 +94,5 @@ public class OperatorMainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadKarbantartasiFeladatok(){
-        KarbantartasKezelo.feladatok.clear();
-        KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
-        CollectionReference karbantartasokReference = db.collection("Karbantartasok");
-        karbantartasokReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult()){
 
-                        Map data = document.getData();
-                        Map eszk = (Map) data.get("Eszkoz");
-                        String eszkNev = (String) eszk.get("nev");
-                        String azonosito = (String) eszk.get("azonosito");
-                        String elhelyezkedes = (String) eszk.get("elhelyezkedes");
-                        String tipus = (String) eszk.get("tipus");
-                        String kategoria = (String) eszk.get("kategoria");
-                        String periodus = (String) eszk.get("periodus");
-                        String normaido = (String) eszk.get("normaido");
-                        String instrukcio = (String) eszk.get("instrukcio");
-                        Eszkoz eszkoz = new Eszkoz(eszkNev,kategoria,tipus,azonosito,elhelyezkedes,periodus,normaido,instrukcio);
-                        String hiba = document.getString("hiba_leiras");
-                        String idopont = document.getString("idopont");
-                        String statusz = document.getString("statusz");
-                        String karbTipus = document.getString("tipus");
-                        KarbantartasiFeladat feladat = new KarbantartasiFeladat(eszkoz,tipus,hiba,statusz,idopont);
-
-                        KarbantartasKezelo.feladatok.add(feladat);
-                    }
-
-                }
-                else
-                {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
 }

@@ -62,6 +62,7 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Hiba leírása..."
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
