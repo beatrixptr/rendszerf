@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Loader.loadKategoriak();
+        Loader.loadKarbantartasiFeladatok();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d("teszt10", String.valueOf(Loader.eszkozok.size()));
+                Log.d("teszt10", String.valueOf(KarbantartasKezelo.feladatok.size()));
+                statuscheck.eszkoz_allapotanak_ellenorzese();
+            }
+        }, 3000);   //5 seconds
+
+
+
 
         nevET = findViewById(R.id.felhNevET);
         jelszoET = findViewById(R.id.felhJelszoET);

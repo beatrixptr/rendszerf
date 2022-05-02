@@ -57,8 +57,8 @@ public class OperatorMainActivity extends AppCompatActivity {
         });
 
         feladatSpinner = findViewById(R.id.feladatSpinner);
-        eszkTemp = new Eszkoz("Válasszon...", "", "", "", "", "", "", "");
-        KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
+        //eszkTemp = new Eszkoz("Válasszon...", "", "", "", "", "", "", "");
+        //KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
         adapterFeladat = new ArrayAdapter<KarbantartasiFeladat>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,
                 KarbantartasKezelo.feladatok) {
             // Disable click item < month current
