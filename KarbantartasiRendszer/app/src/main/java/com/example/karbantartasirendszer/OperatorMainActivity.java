@@ -34,11 +34,10 @@ public class OperatorMainActivity extends AppCompatActivity {
     int selectedPos;
     ArrayAdapter<KarbantartasiFeladat> adapterFeladat;
 
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_main);
 
@@ -53,7 +52,7 @@ public class OperatorMainActivity extends AppCompatActivity {
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Loader.loadKarbantartasiFeladatok();
+                loadKarbantartasiFeladatok();
             }
         });
 
@@ -81,10 +80,10 @@ public class OperatorMainActivity extends AppCompatActivity {
                 selectedFeladat = (KarbantartasiFeladat) parent.getItemAtPosition(pos);
                 selectedPos = pos;
 
-                hibaTV.setText(selectedFeladat.hiba_leiras);
-                allapotTV.setText(selectedFeladat.statusz);
-                tipusTV.setText(selectedFeladat.tipus);
-                idopontTV.setText(selectedFeladat.idopont);
+                hibaTV.setText(selectedFeladat.getHiba_leiras());
+                allapotTV.setText(selectedFeladat.getStatusz());
+                tipusTV.setText(selectedFeladat.getTipus());
+                idopontTV.setText(selectedFeladat.getIdopont());
 
             }
 
@@ -95,5 +94,43 @@ public class OperatorMainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadKarbantartasiFeladatok(){
+        KarbantartasKezelo.feladatok.clear();
+        KarbantartasKezelo.feladatok.add(new KarbantartasiFeladat(eszkTemp,"","","",""));
+        CollectionReference karbantartasokReference = db.collection("Karbantartasok");
+        karbantartasokReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for(QueryDocumentSnapshot document : task.getResult()){
 
+                        Map data = document.getData();
+                        Map eszk = (Map) data.get("Eszkoz");
+                        String eszkNev = (String) eszk.get("nev");
+                        String azonosito = (String) eszk.get("azonosito");
+                        String elhelyezkedes = (String) eszk.get("elhelyezkedes");
+                        String tipus = (String) eszk.get("tipus");
+                        String kategoria = (String) eszk.get("kategoria");
+                        String periodus = (String) eszk.get("periodus");
+                        String normaido = (String) eszk.get("normaido");
+                        String instrukcio = (String) eszk.get("instrukcio");
+                        Eszkoz eszkoz = new Eszkoz(eszkNev,kategoria,tipus,azonosito,elhelyezkedes,periodus,normaido,instrukcio);
+                        String hiba = document.getString("hiba_leiras");
+                        String idopont = document.getString("idopont");
+                        String statusz = document.getString("statusz");
+                        String karbTipus = document.getString("tipus");
+                        KarbantartasiFeladat feladat = new KarbantartasiFeladat(eszkoz,tipus,hiba,statusz,idopont);
+
+                        KarbantartasKezelo.feladatok.add(feladat);
+                    }
+
+                }
+                else
+                {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
 }

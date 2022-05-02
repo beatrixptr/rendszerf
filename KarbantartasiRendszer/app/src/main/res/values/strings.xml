@@ -14,4 +14,10 @@
         <item>6 Havonta</item>
         <item>Evente</item>
     </string-array>
+
+    <string-array name="roles">
+        <item>Eszkozfelelos</item>
+        <item>Operator</item>
+        <item>Karbantarto</item>
+    </string-array>
 </resources>

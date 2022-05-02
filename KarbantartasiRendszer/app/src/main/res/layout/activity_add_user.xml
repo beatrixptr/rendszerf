@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -32,12 +36,10 @@
         android:text="Szerep:"
         android:textSize="24sp" />
 
-    <EditText
+    <Spinner
         android:id="@+id/role"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        android:layout_height="45dp" />
 
     <Space
         android:layout_width="match_parent"
@@ -57,14 +59,50 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="44dp" />
-
     <Button
         android:id="@+id/hozzaad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="hozzaad"
         android:text="Felhasználó hozzáadása" />
+
+    <TextView
+        android:id="@+id/tv7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add hozzá a végzettséget:"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Név:"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/users"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="Végzettség:"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/vegz"
+        android:layout_width="match_parent"
+        android:layout_height="42dp" />
+
+    <Button
+        android:id="@+id/addV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="addVegzettseg"
+        android:text="Végzettség hozzáadása" />
+
 </LinearLayout>
+</ScrollView>
