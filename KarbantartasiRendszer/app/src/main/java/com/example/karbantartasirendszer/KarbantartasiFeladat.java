@@ -63,6 +63,6 @@ public class KarbantartasiFeladat {
 
     @Override
     public String toString(){
-        return eszkoz.toString();
+        return (eszkoz.nev + "-" + idopont);
     }
 }

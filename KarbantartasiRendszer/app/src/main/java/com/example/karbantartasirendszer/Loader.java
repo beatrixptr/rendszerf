@@ -1,7 +1,9 @@
 package com.example.karbantartasirendszer;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,6 +26,7 @@ public class Loader {
     public static ArrayList<String> tipusok = new ArrayList<String>();
     public static ArrayList<String> vegzettsegek = new ArrayList<String>();
     public static ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
+    public static ArrayList<KarbantartoUser> karbantartok = new ArrayList<KarbantartoUser>();
 
     public static void loadKategoriak()
     {
@@ -37,13 +40,58 @@ public class Loader {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        kategoriak.add(new Kategoria(document.getId().toString(), document.getString("normaido"), document.getString("periodus"), document.getString("instrukcio")));
+                       // Map data = document.getData();
+                        //Map vegzettsegek = (Map) data.get("Eszkoz");
+                       // String eszkNev = (String) eszk.get("nev");
+                        ArrayList<String> vegzettsegek = (ArrayList<String>) document.get("Vegzettsegek");
+                        kategoriak.add(new Kategoria(document.getId().toString(), document.getString("normaido"), document.getString("periodus"), document.getString("instrukcio"), vegzettsegek));
                     }
 
                     loadTipusok();
+                   // showKategoriak();
+
                 }
             }
         });
+    }
+
+    public static void loadKarbantartok()
+    {
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = rootRef.collection("Users");
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("idkwhat", "forba bemegy?");
+                        String szerep = document.getString("role");
+                        if(szerep.equals("karbantarto"))
+                        {
+                            Log.d("idkwhat", "ifbe bemegy?");
+                            ArrayList<String> karbVegzettsegek = (ArrayList<String>) document.get("Vegzettsegek");
+                            karbantartok.add(new KarbantartoUser(document.getId().toString(), karbVegzettsegek));
+                        }
+                    }
+                    showKarbantartok();
+
+                }
+
+            }
+        });
+    }
+
+    public static void showKarbantartok()
+    {
+        Log.d("idkwhat", "lefut pedfig");
+        for(int i=0;i<karbantartok.size(); i++)
+        {
+            Log.d("idkwhat", "nev: " + karbantartok.get(i).nev.toString() + "\n");
+            for(int j=0; j<karbantartok.get(i).vegzettsegek.size(); j++)
+            {
+                Log.d("idkwhat", karbantartok.get(i).vegzettsegek.get(j).toString());
+            }
+        }
     }
 
     private static void loadTipusok()

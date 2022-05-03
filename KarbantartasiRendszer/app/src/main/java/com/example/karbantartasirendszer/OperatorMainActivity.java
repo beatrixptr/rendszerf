@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class OperatorMainActivity extends AppCompatActivity {
@@ -49,13 +50,13 @@ public class OperatorMainActivity extends AppCompatActivity {
         tipusTV = findViewById(R.id.tipusTV);
         idopontTV = findViewById(R.id.idopontTV);
 
-        listBtn = findViewById(R.id.listBtn);
-        listBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Loader.loadKarbantartasiFeladatok();
-            }
-        });
+       // listBtn = findViewById(R.id.listBtn);
+      //  listBtn.setOnClickListener(new View.OnClickListener() {
+       //     @Override
+       //     public void onClick(View view) {
+        //        Loader.loadKarbantartasiFeladatok();
+       //     }
+      //  });
 
         feladatSpinner = findViewById(R.id.feladatSpinner);
         //eszkTemp = new Eszkoz("Válasszon...", "", "", "", "", "", "", "");
@@ -93,6 +94,11 @@ public class OperatorMainActivity extends AppCompatActivity {
                 cTV.setText("nothing");
             }
         });
+    }
+
+    public void updateKarbantartoLista(ArrayList<String> szuksegesVegzettseg)
+    {
+
     }
 
 

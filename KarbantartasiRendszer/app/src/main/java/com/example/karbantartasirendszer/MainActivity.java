@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Loader.loadKategoriak();
         Loader.loadKarbantartasiFeladatok();
+        Loader.loadKarbantartok();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("teszt10", String.valueOf(KarbantartasKezelo.feladatok.size()));
                 statuscheck.eszkoz_allapotanak_ellenorzese();
             }
-        }, 3000);   //5 seconds
+        }, 5000);   //5 seconds
 
 
 
