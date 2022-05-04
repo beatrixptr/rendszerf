@@ -2,6 +2,7 @@ package com.example.karbantartasirendszer;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Loader {
@@ -235,6 +237,27 @@ public class Loader {
                 }
             }
         });
+    }
+
+    public static void loadSajatFeladatok(String _karb){
+        //KarbantartasKezelo.sajatFeladatok.clear();
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        DocumentReference karbRef = rootRef.collection("Users").document(_karb);
+        Eszkoz eszkTemp = new Eszkoz("Válasszon...", "", "", "", "", "", "", "");
+        karbRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                KarbantartasKezelo.sajatFeladatok = (ArrayList<KarbantartasiFeladat>) document.get("Feladatok");
+                KarbantartasKezelo.sajatFeladatok.add(0, new KarbantartasiFeladat(eszkTemp, "", "", "", ""));
+                Log.d("sajatFelSize",String.valueOf(KarbantartasKezelo.sajatFeladatok.size()));
+                //List<KarbantartasiFeladat> fel = (List<KarbantartasiFeladat>) document.get("Feladatok");
+
+            }
+        });
+
+
+
     }
 
     public static void showEszkozok()

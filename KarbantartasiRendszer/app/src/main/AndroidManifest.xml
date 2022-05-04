@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KarbantartasiRendszer">
         <activity
+            android:name=".KarbantartoFeladatokActivity"
+            android:exported="false" />
+        <activity
             android:name=".OperatorMainActivity"
             android:exported="false" />
         <activity

@@ -88,11 +88,10 @@ public class MainActivity extends AppCompatActivity {
                     int count = 0;
                     String data = "";
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        count++;
-                        data += document.getId()+"\n";
+                        String docID = document.getId();
                         String nev = nevET.getText().toString();
                         String jelszo = jelszoET.getText().toString();
-                        if(nev.equals(document.getId()) && jelszo.equals(document.getString("pw"))){
+                        if(nev.equals(docID) && jelszo.equals(document.getString("pw"))){
                             String szerep = document.getString("role");
                             switch (szerep){
                                 case "admin":
@@ -108,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(op);
                                     break;
                                 case "karbantarto":
-                                    testTV.setText("Karbantartó");
                                     Intent c = new Intent(MainActivity.this, KarbantartoMainActivity.class);
+                                    c.putExtra("karb",docID);
                                     startActivity(c);
                                     break;
                                 default:
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         else{
-                            Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "Helytelen bejelentkezési adatok", Toast.LENGTH_SHORT).show();
                         }
                     }
                     tv.setText(data + String.valueOf(count));
