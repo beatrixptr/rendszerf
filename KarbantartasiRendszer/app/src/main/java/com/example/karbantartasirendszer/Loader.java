@@ -25,6 +25,7 @@ public class Loader {
     public static ArrayList<String> vegzettsegek = new ArrayList<String>();
     public static ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
     public static ArrayList<String> felhasznalok = new ArrayList<String>();
+    public static ArrayList<KarbantartoUser> karbantartok = new ArrayList<KarbantartoUser>();
 
     public static void loadKategoriak()
     {
@@ -38,13 +39,69 @@ public class Loader {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        kategoriak.add(new Kategoria(document.getId().toString(), document.getString("normaido"), document.getString("periodus"), document.getString("instrukcio")));
+                        ArrayList<String> szuksegesVegzettsegek = (ArrayList<String>) document.get("Vegzettsegek");
+                        kategoriak.add(new Kategoria(document.getId().toString(), document.getString("normaido"), document.getString("periodus"), document.getString("instrukcio"), szuksegesVegzettsegek));
                     }
 
                     loadTipusok();
+                    showKategVegz();
                 }
             }
         });
+    }
+
+    public static void loadKarbantartok()
+    {
+        karbantartok.clear();
+        karbantartok.add(new KarbantartoUser("Karbantartó...", null));
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = rootRef.collection("Users");
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        String szerep = document.getString("role");
+                        if(szerep.equals("karbantarto"))
+                        {
+
+                            ArrayList<String> karbVegzettsegek = (ArrayList<String>) document.get("Vegzettsegek");
+                            karbantartok.add(new KarbantartoUser(document.getId().toString(), karbVegzettsegek));
+                        }
+                    }
+                  //  showKarbantartok();
+
+                }
+
+            }
+        });
+    }
+
+    public static void showKarbantartok()
+    {
+
+        for(int i=1;i<karbantartok.size(); i++)
+        {
+            Log.d("idkwhat", "nev: " + karbantartok.get(i).nev.toString() + "\n");
+            for(int j=0; j<karbantartok.get(i).vegzettsegek.size(); j++)
+            {
+                Log.d("idkwhat", karbantartok.get(i).vegzettsegek.get(j).toString());
+            }
+        }
+    }
+
+    public static void showKategVegz()
+    {
+        Log.d("idkwhat", "lefut pedfig");
+        for(int i=1;i<kategoriak.size(); i++)
+        {
+            Log.d("idkwhat", "nev: " + kategoriak.get(i).nev.toString() + "\n");
+            for(int j=0; j<kategoriak.get(i).szuksegesVegzettsegek.size(); j++)
+            {
+                Log.d("idkwhat", kategoriak.get(i).szuksegesVegzettsegek.get(j).toString());
+            }
+        }
     }
 
     private static void loadTipusok()

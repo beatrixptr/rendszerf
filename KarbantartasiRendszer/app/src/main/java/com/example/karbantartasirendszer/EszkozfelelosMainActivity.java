@@ -60,8 +60,6 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
 
         vegzettsegSpinner = findViewById(R.id.vegzettsegSpinner);
         vegzettsegSpinner.setOnItemSelectedListener(this);
-
-        Loader.loadKategoriak();
         Loader.loadVegzettsegek();
 
               //  EditPlace = findViewById(R.id.EditName);
@@ -154,7 +152,7 @@ public class EszkozfelelosMainActivity extends AppCompatActivity implements Adap
         }
         CollectionReference Kategoriak = rootRef.collection("Kategoriak");
         Kategoria ujKategoria = new Kategoria(EditNameKat.getText().toString(), EditNormaKat.getText().toString(), selectedPeriodusKat, EditInstrukcioKat.getText().toString());
-
+        ujKategoria.addNewVegzettseg(selectedVegzettseg);
         Log.d("teszt", "hozzaadva" + ujKategoria.nev.toString());
         Map<String, Object> note = new HashMap<>();
         note.put("normaido", EditNormaKat.getText().toString());

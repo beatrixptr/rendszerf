@@ -58,6 +58,18 @@ public class KarbantartasiFeladat {
         addKarbantartasiFeladat();
     }
 
+    public void UpdateStatusz(String ujstatusz)
+    {
+        statusz = ujstatusz;
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference Karbantartas = rootRef.collection("Karbantartasok");
+
+        String feladatNev = eszkoz.nev + "-" + idopont;
+        Map<String, Object> note = new HashMap<>();
+        note.put("statusz", statusz);
+        Karbantartas.document(feladatNev).update(note);
+    }
+
     public void addKarbantartasiFeladat()
     {
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
@@ -77,6 +89,6 @@ public class KarbantartasiFeladat {
 
     @Override
     public String toString(){
-        return eszkoz.toString();
+        return (eszkoz.nev + "-" + idopont);
     }
 }

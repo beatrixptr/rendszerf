@@ -24,6 +24,7 @@ public class Kategoria {
     public String normaido;
     public String periodus;
     public String instrukcio;
+    public ArrayList<String> szuksegesVegzettsegek = new ArrayList<String>();
 
     public Kategoria(String _nev, String _normaido, String _periodus, String _instrukcio)
     {
@@ -31,6 +32,20 @@ public class Kategoria {
         normaido = _normaido;
         periodus = _periodus;
         instrukcio = _instrukcio;
+    }
+
+    public Kategoria(String _nev, String _normaido, String _periodus, String _instrukcio, ArrayList<String> _vegzettsegek)
+    {
+        nev = _nev;
+        normaido = _normaido;
+        periodus = _periodus;
+        instrukcio = _instrukcio;
+        szuksegesVegzettsegek = _vegzettsegek;
+    }
+
+    public void addNewVegzettseg(String uj)
+    {
+        szuksegesVegzettsegek.add(uj);
     }
 
     public void AddEszkoz(Eszkoz eszk, String selectedPeriodus)
@@ -77,9 +92,6 @@ public class Kategoria {
             }
         });
     }
-
-
-
 
 
      @Override

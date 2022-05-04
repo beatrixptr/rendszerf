@@ -67,7 +67,7 @@ public class addUser extends AppCompatActivity {
         vegzettsegAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         vegz.setAdapter(vegzettsegAdapter);
 
-        Loader.loadFelhasznalok();
+
 
         usersAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Loader.felhasznalok) {
             // Disable click item < month current
