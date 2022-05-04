@@ -36,7 +36,7 @@ public class addUser extends AppCompatActivity {
     private Spinner role, vegz, users;
     private ArrayAdapter<CharSequence> roleAdapter;
     private ArrayAdapter<String> vegzettsegAdapter;
-    private ArrayAdapter<String> usersAdapter;
+    private ArrayAdapter<KarbantartoUser> usersAdapter;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -69,7 +69,7 @@ public class addUser extends AppCompatActivity {
 
 
 
-        usersAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Loader.felhasznalok) {
+        usersAdapter = new ArrayAdapter<KarbantartoUser>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Loader.karbantartok) {
             // Disable click item < month current
             @Override
             public boolean isEnabled(int position) {
