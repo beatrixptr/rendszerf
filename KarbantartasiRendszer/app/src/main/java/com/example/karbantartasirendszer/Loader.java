@@ -249,7 +249,7 @@ public class Loader {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
                 KarbantartasKezelo.sajatFeladatok = (ArrayList<KarbantartasiFeladat>) document.get("Feladatok");
-                KarbantartasKezelo.sajatFeladatok.add(0, new KarbantartasiFeladat(eszkTemp, "", "", "", ""));
+                //KarbantartasKezelo.sajatFeladatok.add(0, new KarbantartasiFeladat(eszkTemp, "", "", "", ""));
                 Log.d("sajatFelSize",String.valueOf(KarbantartasKezelo.sajatFeladatok.size()));
                 //List<KarbantartasiFeladat> fel = (List<KarbantartasiFeladat>) document.get("Feladatok");
 
