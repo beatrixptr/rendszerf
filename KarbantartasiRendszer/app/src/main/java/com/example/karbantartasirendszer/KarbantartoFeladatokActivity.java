@@ -77,8 +77,13 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity implements A
                         statusz,idopont);
                 cancerTV.setText(karbF.toString());
 
-                String cancer = parent.getItemAtPosition(pos).toString();
-                adatokTV.setText(cancer);
+                //String cancer = parent.getItemAtPosition(pos).toString();
+                //adatokTV.setText(cancer);
+                if (statusz.equals("Megkezdve"))
+                {
+                    String instrukcio = "-->Hiba:\n" + hiba + "\n\n-->Instrukciok:\n" + eszkinstukcio;
+                    adatokTV.setText(instrukcio);
+                }
                 karbFPos = pos;
 
             }
@@ -125,8 +130,11 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity implements A
             cancerTV.append("\n"+karbF.getStatusz());
             DocumentReference karbFelRef = db.collection("Karbantartasok").document(karbFelNev);
             karbFelRef.update("statusz",statusz);
-
-            Map<String, Object> note = new HashMap<>();
+            if(statusz.equals("Megkezdve"))
+            {
+                String instrukcio = "-->Hiba:\n" + karbF.getHiba_leiras() + "\n\n-->Instrukciok:\n" + karbF.getEszkoz().instrukcio;
+                adatokTV.setText(instrukcio);
+            }
         }
 
 
