@@ -20,4 +20,11 @@
         <item>operator</item>
         <item>karbantarto</item>
     </string-array>
+
+    <string-array name="statusz">
+        <item>Elfogadva</item>
+        <item>Elutasitva</item>
+        <item>Megkezdve</item>
+        <item>Befejezve</item>
+    </string-array>
 </resources>

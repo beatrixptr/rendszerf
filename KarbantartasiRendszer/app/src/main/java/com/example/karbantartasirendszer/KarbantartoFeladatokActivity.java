@@ -6,19 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KarbantartoFeladatokActivity extends AppCompatActivity {
+public class KarbantartoFeladatokActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    Button megerositBtn;
     TextView adatokTV, cancerTV;
-    Spinner sajatFeladatokSpinner;
+    Spinner sajatFeladatokSpinner, statuszSpinner;
     ArrayAdapter<KarbantartasiFeladat> adapterSajatFeladat;
+    ArrayAdapter<CharSequence> adapterStatusz;
     KarbantartasiFeladat karbF;
+    int karbFPos;
+    String statusz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +38,8 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity {
         String karb = getIntent().getExtras().getString("karb");
         adatokTV = findViewById(R.id.adatokTV);
         cancerTV = findViewById(R.id.cancerTV);
-        //convertToKarbantartasiFeladat();
-        sajatFeladatokSpinner = findViewById(R.id.sajatFeladatokSpinner);
 
+        sajatFeladatokSpinner = findViewById(R.id.sajatFeladatokSpinner);
         adapterSajatFeladat = new ArrayAdapter<KarbantartasiFeladat>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,
                 KarbantartasKezelo.sajatFeladatok) {
             // Disable click item < month current
@@ -69,9 +78,8 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity {
                 cancerTV.setText(karbF.toString());
 
                 String cancer = parent.getItemAtPosition(pos).toString();
-                //adatokTV.setText(parent.getItemAtPosition(pos).getClass().toString());
                 adatokTV.setText(cancer);
-                //adatokTV.append("\nteszt: " + );
+                karbFPos = pos;
 
             }
 
@@ -79,11 +87,49 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
+
         });
+        statuszSpinner = findViewById(R.id.statuszSpinner);
+        adapterStatusz = ArrayAdapter.createFromResource(this,R.array.statusz, android.R.layout.simple_spinner_dropdown_item);
+        adapterStatusz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statuszSpinner.setAdapter(adapterStatusz);
+        statuszSpinner.setOnItemSelectedListener(this);
+
+        megerositBtn = findViewById(R.id.megerositBtn);
+        megerositBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                statuszMegerosit();
+            }
+        });
+
     }
 
-    private void convertToKarbantartasiFeladat() {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+        statusz = parent.getItemAtPosition(pos).toString();
+        //Toast.makeText(this, statusz, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
+    private void statuszMegerosit(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        karbF.setStatusz(statusz);
+        String karbFelNev = karbF.eszkoz.getNev() +"-"+ karbF.idopont;
+        if(statusz != null){
+            cancerTV.append("\n"+karbF.getStatusz());
+            DocumentReference karbFelRef = db.collection("Karbantartasok").document(karbFelNev);
+            karbFelRef.update("statusz",statusz);
+
+            Map<String, Object> note = new HashMap<>();
+        }
+
+
+
+    }
 }

@@ -37,6 +37,8 @@ public class KarbantartasiFeladat {
         return statusz;
     }
 
+    public void setStatusz(String _statusz) { this.statusz = _statusz; }
+
     public KarbantartasiFeladat(Eszkoz _eszkoz, String _tipus, String _hiba_leiras, String _statusz, String _idopont)
     {
         eszkoz = _eszkoz;
