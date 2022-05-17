@@ -11,8 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -130,14 +132,37 @@ public class KarbantartoFeladatokActivity extends AppCompatActivity implements A
             cancerTV.append("\n"+karbF.getStatusz());
             DocumentReference karbFelRef = db.collection("Karbantartasok").document(karbFelNev);
             karbFelRef.update("statusz",statusz);
+
             if(statusz.equals("Megkezdve"))
             {
                 String instrukcio = "-->Hiba:\n" + karbF.getHiba_leiras() + "\n\n-->Instrukciok:\n" + karbF.getEszkoz().instrukcio;
                 adatokTV.setText(instrukcio);
             }
+            if(statusz.equals("Befejezve") )
+            {
+                if(karbF.tipus.equals("Rendkivuli"))
+                    karbFelRef.delete();
+
+                KarbantartasKezelo.sajatFeladatok.remove(karbF);
+                Loader.removeFeladat(Loader.loggedInUser, karbF);
+            }
+
+          /*  DocumentReference sajatFelRef = db.collection("Users").document(Loader.loggedInUser);
+            sajatFelRef.get().whereArrayContaints("Feladatok", karbF).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                }
+            });*/
         }
 
-
-
+        /*usersRef.whereArrayContains("friends", john).get().addOnCompleteListener{ johnTask ->
+    johnTask.apply {
+        if (johnTask.isSuccessful) {
+            for (document in result) {
+                val docIdRef = usersRef.document(document.id)
+                docIdRef.update("friends", FieldValue.arrayRemove(john)).addOnCompleteListener{ removeTask ->
+                    if (removeTask.isSuccessful) {
+                        docIdRef.update("friends", FieldValue.arrayUnion(Friend("John", 21))).addOnCompleteListener{ additionTask ->*/
     }
 }

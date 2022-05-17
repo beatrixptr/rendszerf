@@ -7,16 +7,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +32,8 @@ public class Loader {
     public static ArrayList<Eszkoz> eszkozok = new ArrayList<Eszkoz>();
     public static ArrayList<String> felhasznalok = new ArrayList<String>();
     public static ArrayList<KarbantartoUser> karbantartok = new ArrayList<KarbantartoUser>();
+
+    public static String loggedInUser;
 
     public static void loadKategoriak()
     {
@@ -249,6 +255,7 @@ public class Loader {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
                 KarbantartasKezelo.sajatFeladatok = (ArrayList<KarbantartasiFeladat>) document.get("Feladatok");
+
                 //KarbantartasKezelo.sajatFeladatok.add(0, new KarbantartasiFeladat(eszkTemp, "", "", "", ""));
                 Log.d("sajatFelSize",String.valueOf(KarbantartasKezelo.sajatFeladatok.size()));
                 //List<KarbantartasiFeladat> fel = (List<KarbantartasiFeladat>) document.get("Feladatok");
@@ -267,6 +274,28 @@ public class Loader {
         {
             Log.d("teszt4", "Név: " + eszkozok.get(i).nev + " Kategoria: " + eszkozok.get(i).kategoria + " Tipus: " + eszkozok.get(i).tipus + " Norma: " + eszkozok.get(i).normaido);
         }
+    }
+
+    public static void removeFeladat(String nev, KarbantartasiFeladat feladat)
+    {
+        Log.d("1", "lefut");
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference UserKarb = rootRef.collection("Users");
+        Map<String, Object> note = new HashMap<>();
+        UserKarb.document(nev).set(note, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                UserKarb.document(nev).update("Feladatok", FieldValue.arrayRemove(feladat)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //feladat.UpdateStatusz("Kiosztva - " + nev);
+                        Log.d("1", "removed: " + feladat.toString());
+                    }
+                });
+
+            }
+
+        });
     }
 
 

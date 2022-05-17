@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+
     private EditText nevET, jelszoET;
     private Button bejelentkezesBtn, colreftestBtn;
     private TextView tv,testTV;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         String jelszo = jelszoET.getText().toString();
                         if(nev.equals(docID) && jelszo.equals(document.getString("pw"))){
                             String szerep = document.getString("role");
+                            Loader.loggedInUser = docID;
                             switch (szerep){
                                 case "admin":
                                     Intent i = new Intent(MainActivity.this, AdminMainActivity.class);

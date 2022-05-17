@@ -1,5 +1,6 @@
 package com.example.karbantartasirendszer;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,14 +31,14 @@ public class KarbantartoUser {
 
         Map<String, Object> note = new HashMap<>();
 
-
+        feladat.UpdateStatusz("Kiosztva - " + nev);
         UserKarb.document(nev).set(note, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 UserKarb.document(nev).update("Feladatok", FieldValue.arrayUnion(feladat)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        feladat.UpdateStatusz("Kiosztva - " + nev);
+                       // feladat.UpdateStatusz("Kiosztva - " + nev);
                     }
                 });
 
@@ -48,6 +49,8 @@ public class KarbantartoUser {
 
 
     }
+
+
 
     @Override
     public String toString() {
